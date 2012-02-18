@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>U.S. County Map</title>
+    <script type="text/javascript" src="d3.min.js"></script>
+    <script type="text/javascript" src="d3.geo.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="choropleth.css"/>
+    <link type="text/css" rel="stylesheet" href="colorbrewer.css"/>
+  </head>
+  <body>
+	
+    <div id="chart"></div>
+
+		<script data-joshfire-bootstrap></script>
+
+    <script type="text/javascript">
+
+			// See http://mbostock.github.com/d3/ex/choropleth.html
+
+			var data; // loaded asynchronously
+
+			var path = d3.geo.path();
+
+			var svg = d3.select("#chart")
+			  .append("svg");
+
+			var counties = svg.append("g")
+			    .attr("id", "counties")
+			    .attr("class", "Blues");
+
+			var states = svg.append("g")
+			    .attr("id", "states");
+
+			d3.json("us-counties.json", function(json) {
+			  counties.selectAll("path")
+			      .data(json.features)
+			    .enter().append("path")
+			      .attr("class", data ? quantize : null)
+			      .attr("d", path);
+			});
+
+			d3.json("us-states.json", function(json) {
+			  states.selectAll("path")
+			      .data(json.features)
+			    .enter().append("path")
+			      .attr("d", path);
+			});
+			/*
+			Joshfire.factory.getDataSource("main").find({},function(err,data) {
+				
+			});
+			*/
+			d3.json("unemployment.json", function(json) {
+			  data = json;
+			  counties.selectAll("path")
+			      .attr("class", quantize);
+			});
+
+			function quantize(d) {
+			  return "q" + Math.min(8, ~~(data[d.id] * 9 / 12)) + "-9";
+			}
+	
+		</script>
+  </body>
+</html>

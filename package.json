@@ -1,0 +1,23 @@
+{
+  "name": "us-counties",
+  "version": "0.0.1",
+  "fullName": "U.S. Counties Map",
+  "description": "Dataviz of U.S. Counties, based on the d3.js library",
+  "keywords": [
+     "dataviz",
+     "data",
+     "d3",
+     "geo",
+     "us",
+     "counties"
+   ],
+  "joshfire": {
+    
+    "datasources": {
+      "main": {
+        "title": "Data",
+        "description": "2 columns : Zip and Value"
+      }
+    }
+  }
+}
